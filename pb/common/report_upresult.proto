@@ -1,0 +1,13 @@
+syntax="proto3";
+package Carrier;
+
+message ReportUpresult{ 
+	// imei
+	string imei   = 1;
+
+	// 序列号对应平台发送升级协议的序列号
+	string serial = 2;
+
+	// 升级结果，目前仅当失败是终端才发送 这个字段的值始终是1(失败)
+	string result = 3;
+}

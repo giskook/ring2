@@ -1,0 +1,13 @@
+syntax="proto3";
+package Carrier;
+
+message DistributeLowpset{
+	// imei
+	string imei    = 1;
+
+	// 序列号
+	string serial  = 2;
+
+	// 单位1% 例如 30 表示 30%
+	string lowpset = 3;
+}

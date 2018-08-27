@@ -1,0 +1,14 @@
+syntax="proto3";
+package Carrier;
+
+message DistributeCross{
+	// imei
+	string imei   = 1;
+
+	// 序列号
+	string serial = 2;
+
+	// 0 表示 进圈 1 表示 出圈 
+	// 后面如果更明确的话，可以把这个字段替换成内容
+	string cross  = 3;
+}

@@ -1,0 +1,28 @@
+syntax="proto3";
+package Carrier;
+
+message ReportAck{ 
+	// imei
+	string imei    = 1;
+
+	// 上层服务器发给终端的序列号
+	string serial  = 2; 
+
+	// 指令类型 
+	// PSNDM 下发消息
+	// PCROSS 越界告警
+	// PLOWPSET 低电设置
+	// PCTL 终端控制
+	// PSRVSET 服务器设置
+	// PREQP 请求定位
+	// PTEARCHK 强拆检测
+	// PUPGRADE 远程升级
+	string cmdtype = 3;
+
+	// 指令执行结果
+	// 0 成功
+	// 1 失败
+	// PTEARCHK 0 正常 1 强拆
+	// PUPGRADE 0 正常,开始升级 1 不能升级
+	string result  = 4;
+}

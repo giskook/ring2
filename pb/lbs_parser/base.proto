@@ -1,0 +1,13 @@
+syntax="proto3";
+package Lbs;
+
+message Header {
+	// app id 程序标志，使用场景:多个程序调用同一个服务，该服务可以记录每个程序的调用情况
+	string appid = 1; 
+
+	// 消息的投递方 一般情况下认为消息的投递方也是消息经过服务处理后的错误处理方
+	string from  = 2; 
+
+	// 消息的目的方
+	string to    = 3;
+}

@@ -1,0 +1,11 @@
+syntax="proto3";
+package Carrier;
+
+// 最终抛给上层服务的结构,考虑到解析位置服务的独立性，将其他的数据都作为Extra数据进行处理
+message ReportLocation {
+	// 附加数据  LocationExtra 序列化后的结果
+	bytes extra      = 1;
+	string longitude = 2;
+	string latitude  = 3;
+	string speed     = 4;
+}

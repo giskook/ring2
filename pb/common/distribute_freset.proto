@@ -1,0 +1,13 @@
+syntax="proto3";
+package Carrier;
+
+message DistributeFreset{
+	// imei
+	string imei      = 1;
+
+	// 序列号
+	string serial    = 2;
+
+	// 单位 : 分
+	string frequency = 3;
+}

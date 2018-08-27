@@ -1,0 +1,48 @@
+syntax="proto3";
+package Carrier;
+
+import "base.proto";
+import "distribute_logrt.proto";
+import "distribute_location.proto";
+import "distribute_reqp.proto";
+import "distribute_tearchk.proto";
+import "distribute_message.proto";
+import "distribute_cross.proto";
+import "distribute_freset.proto";
+import "distribute_lowpset.proto";
+import "distribute_ctl.proto";
+import "distribute_srvset.proto";
+import "distribute_upgrade.proto";
+import "distribute_ack.proto";
+
+message Distribute{ 
+	Header header = 1;
+	enum Protocol{
+		UNKNOWN         = 0;
+		LOGRT           = 1;
+		LOCATION        = 2;
+		REQP            = 3;
+		TEARCHK         = 4;
+		MESSAGE         = 5;
+		CROSS           = 6;
+		FRESET          = 7;
+		LOWPSET         = 8;
+		CTL             = 9;
+		SRVSET          = 10;
+		UPGRADE         = 11;
+		ACK             = 12;
+	}
+	Protocol protocol                    = 2;
+	DistributeLogRt logrt                = 3;
+	DistributeLocation location          = 4;
+	DistributeReqp reqp                  = 5;
+	DistributeTearchk tearchk            = 6;
+	DistributeMessage message            = 7;
+	DistributeCross cross                = 8;
+	DistributeFreset freset              = 9;
+	DistributeLowpset lowpset            = 10;
+	DistributeCtl ctl                    = 11;
+	DistributeSrvset srvset              = 12;
+	DistributeUpgrade upgrade            = 13;
+	DistributeAck ack                    = 14;
+}

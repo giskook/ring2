@@ -1,0 +1,36 @@
+syntax="proto3";
+package Lbs;
+
+import "base.proto";
+
+message WifiCell { 
+	string mac     = 1;
+	string singnal = 2;
+}
+
+message StationCell {
+	string lac = 1;
+	string cid = 2;
+	string dbm = 3;
+}
+
+message Report{ 
+	Header header                     = 1;
+	
+	enum LbsType {
+		UNKNOWN  = 0;
+		WIFI     = 1; // wifi 
+		STATION  = 2; // cell
+	}
+	
+	LbsType type                      = 2;
+
+	// Wifi位置
+	repeated WifiCell wifi_cell       = 3; 
+
+	// 基站位置
+	repeated StationCell station_cell = 4;
+
+	// 附加数据  LocationExtra 序列化后的结果
+	bytes extra                       = 5;
+}

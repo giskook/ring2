@@ -1,0 +1,13 @@
+syntax="proto3";
+package Carrier;
+
+message DistributeCtl{
+	// imei
+	string imei   = 1;
+
+	// 序列号
+	string serial = 2;
+
+	// 控制类型 0 关机 1 重启
+	string ctl    = 3;
+}

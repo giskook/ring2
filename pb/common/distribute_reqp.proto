@@ -1,0 +1,13 @@
+syntax="proto3";
+package Carrier;
+
+message DistributeReqp{
+	// imei
+	string imei   = 1;
+
+	// 序列号
+	string serial = 2;
+
+	// 1 终端被动上报 3 超圈检测
+	string type   = 3;
+}

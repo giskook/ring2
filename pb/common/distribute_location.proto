@@ -1,0 +1,10 @@
+syntax="proto3";
+package Carrier;
+
+message DistributeLocation{
+	// 附加数据  LocationExtra 序列化后的结果
+	bytes extra         = 1;
+
+	// 0 解析成功 1 解析失败
+	string parse_result = 4;
+}

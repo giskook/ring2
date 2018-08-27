@@ -1,0 +1,30 @@
+syntax="proto3";
+package Carrier;
+
+import "base.proto";
+import "report_login.proto";
+import "report_location.proto";
+import "report_lowp.proto";
+import "report_receipt.proto";
+import "report_ack.proto";
+import "report_upresult.proto";
+
+message Report{ 
+	Header header = 1;
+	enum Protocol{
+		UNKNOWN       = 0;
+		LOGIN         = 1;
+		LOCATION      = 2;
+		LOWP          = 3;
+		RECEIPT       = 4;
+		ACK           = 5;
+		UPRESULT      = 6;
+	}
+	Protocol protocol          = 2;
+	ReportLogin login          = 3;
+	ReportLocation location    = 4;
+	ReportLowp lowp 	   = 6;
+	ReportReceipt receipt      = 7;
+	ReportAck ack              = 8;
+	ReportUpresult upresult    = 9;
+}

@@ -1,0 +1,16 @@
+syntax="proto3";
+package Carrier;
+
+message DistributeAck{
+	// enum 的名称必须和协议里的字段相同，虽然耦合，但是少些好多代码 ;P
+	enum AckType{
+		TMSREAD = 0;
+	}
+	// 确认类型 目前默认为0,仅支持已读消息的确认
+	AckType type  = 1;
+	// imei
+	string imei   = 2;
+
+	// 时间 格式为YYMMDD-HHMMSS  终端已读协议上报的时间
+	string time   = 3;
+}

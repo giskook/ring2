@@ -1,0 +1,17 @@
+syntax="proto3";
+package Lbs;
+
+import "base.proto";
+
+message Distribute{ 
+	Header header       = 1;
+
+	// 0 解析成功 1 解析失败
+	string parse_result = 2;
+
+	string longitude    = 3;
+	string latitude     = 4;
+
+	// 附加数据  LocationExtra 序列化后的结果
+	bytes extra         = 5;
+}

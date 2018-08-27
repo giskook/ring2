@@ -1,0 +1,13 @@
+syntax="proto3";
+package Carrier;
+
+message DistributeMessage{
+	// imei
+	string imei    = 1;
+
+	// 序列号
+	string serial  = 2;
+
+	// 要发送的内容
+	string message = 3;
+}

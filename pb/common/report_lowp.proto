@@ -1,0 +1,10 @@
+syntax="proto3";
+package Carrier;
+
+message ReportLowp{ 
+	// imei
+	string imei = 1;
+
+	// 时间 格式为YYMMDD-HHMMSS
+	string time = 2;
+}

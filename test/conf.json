@@ -1,0 +1,24 @@
+{
+	"AppID":"ring",
+	"UUID":"das1",
+	"Nsq":{
+		"Addr":"192.168.2.67:4150",
+		"ProducerCount":3,
+		"TopicPManage":"dcs",
+		"TopicPControl":"dcs",
+		"TopicPLocation":"dps",
+		"TopicConsumer":{
+			"Topic":"das1",
+			"Channel":"das1_ch",
+			"Number":3
+		}
+	},
+	"TcpServer":{
+		"BindPort":"1999",
+		"ReadLimit":300,
+		"WriteLimit":300,
+		"ConnTimeout":10,
+		"ConnCheckInterval":10,
+		"WorkerNum":10
+	}
+}

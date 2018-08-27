@@ -1,0 +1,21 @@
+{
+	"AppID":"ring",
+	"UUID":"dcs",
+	"Nsq":{
+		"Addr":"192.168.2.67:4150",
+		"ProducerCount":3,
+		"TopicConsumer":{
+			"Topic":"dcs",
+			"Channel":"dcs_ch",
+			"Number":3
+		}
+	},
+	"TcpServer":{
+		"BindPort":"8876",
+		"ReadLimit":300,
+		"WriteLimit":300,
+		"ConnTimeout":10,
+		"ConnCheckInterval":10,
+		"WorkerNum":10
+	}
+}

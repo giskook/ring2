@@ -1,0 +1,36 @@
+syntax="proto3";
+package Carrier;
+
+message Header {
+	// app id 程序标志，使用场景:多个程序调用同一个服务，该服务可以记录每个程序的调用情况
+	string appid = 1; 
+
+	// 消息的投递方 一般情况下认为消息的投递方也是消息经过服务处理后的错误处理方
+	string from  = 2; 
+
+	// 消息的目的方
+	string to    = 3;
+}
+
+message LocationExtra{
+	// imei
+	string imei            = 1;
+
+	// serial
+	string serial          = 2;
+
+	// terminal status  "00" 正常 ”x1" 拆卸 "1x" 低电
+	string terminal_status = 3;
+
+	// time  格式为YYMMDD-HHMMSS
+	string time            = 4;
+
+	// 电量
+	string batt            = 5;
+
+	// 0 终端主动上报 1 终端被动上报 2 终端位置补报 3 超圈检测
+	string pos_reason      = 6;
+
+	// 定位类型 0=GPS位置，1=基站位置,2=wifi定位
+	string pos_type        = 7; 
+}
