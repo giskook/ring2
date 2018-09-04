@@ -1,8 +1,9 @@
 package protocol
 
 import (
-	"encoding/base64"
+	//	"encoding/base64"
 	iconv "github.com/djimenez/iconv-go"
+	"github.com/giskook/ring2/base"
 	"github.com/giskook/ring2/pb/common"
 )
 
@@ -15,11 +16,10 @@ type DistributeMessagePkg struct {
 func (d *DistributeMessagePkg) Serialize() []byte {
 	cmd := write_header(PROTOCOL_DISTRIBUTE_MESSAGE, d.Imei)
 	msg, _ := iconv.ConvertString(d.Message, "UTF-8", "UTF-16LE")
-	cmd += base64.StdEncoding.EncodeToString([]byte(msg))
-	cmd += PROTOCOL_SEP
-	cmd += PROTOCOL_END_FLAG
+	//cmd += base64.StdEncoding.EncodeToString([]byte(msg))
+	cmd += base.GetBcdString([]byte(msg))
 
-	return []byte(cmd)
+	return write_tail(cmd)
 }
 
 func ParseDistributeMessage(d *Carrier.Distribute) (string, *DistributeMessagePkg) {

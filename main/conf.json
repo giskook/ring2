@@ -2,8 +2,8 @@
 	"AppID":"ring",
 	"UUID":"ring_das5",
 	"Nsq":{
-		"Addr":"192.168.2.156:4150",
-		"ProducerCount":3,
+		"Addr":"111.11.30.166:5631",
+		"ProducerCount":1,
 		"TopicPManage":"das2dcs",
 		"TopicPControl":"das2dcs",
 		"TopicPLocation":"das2dcs",
@@ -11,18 +11,18 @@
 		"TopicConsumer":{
 			"Topic":"ring_das5",
 			"Channel":"das5_ch",
-			"Number":3
+			"Number":1
 		},
 		"TopicLbsConsumer":{
 			"Topic":"das5_lbs",
 			"Channel":"das1_lbs_ch",
-			"Number":3
+			"Number":1
 		}
 	},
 	"TcpServer":{
 		"BindPort":"8876",
-		"ReadLimit":300,
-		"WriteLimit":300,
+		"ReadLimit":3000,
+		"WriteLimit":3000,
 		"ConnTimeout":10,
 		"ConnCheckInterval":10,
 		"WorkerNum":10

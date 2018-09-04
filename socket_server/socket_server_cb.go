@@ -15,6 +15,7 @@ func (ss *SocketServer) eh_report_login(p []string, c *Connection) {
 	}
 	login := protocol.ParseReportLogin(p, header)
 	id, _ := strconv.ParseUint(login.Imei, 10, 64)
+	c.imei = login.Imei
 	c.ID = id
 	c.random_num = login.RandomNum
 	ss.cm.Put(id, c)

@@ -12,11 +12,9 @@ type DistributeReqpPkg struct {
 
 func (d *DistributeReqpPkg) Serialize() []byte {
 	cmd := write_header(PROTOCOL_DISTRIBUTE_REQP, d.Imei)
-	cmd += "LOCATION/W"
-	cmd += PROTOCOL_SEP
-	cmd += PROTOCOL_END_FLAG
+	cmd += "O"
 
-	return []byte(cmd)
+	return write_tail(cmd)
 }
 
 func ParseDistributeReqp(d *Carrier.Distribute) (string, *DistributeReqpPkg) {

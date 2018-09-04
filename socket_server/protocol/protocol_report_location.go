@@ -5,7 +5,6 @@ import (
 	"github.com/giskook/ring2/pb/common"
 	"github.com/giskook/ring2/pb/lbs_parser"
 	"github.com/golang/protobuf/proto"
-	"log"
 	"strconv"
 	"strings"
 )
@@ -216,8 +215,6 @@ func ParseReportLocation(p []string, h *base.Header, from4gps string, from4lbs s
 		}
 	} else if r.PosType == LOCATION_TYPE_WIFI {
 		values := strings.Split(p[9], "/")
-		log.Println(values)
-		log.Println(len(values))
 		if len(values)%2 != 0 {
 			return nil
 		}
@@ -230,7 +227,6 @@ func ParseReportLocation(p []string, h *base.Header, from4gps string, from4lbs s
 				Singnal: singnal,
 			})
 		}
-		log.Println(r.WifiInfo)
 	}
 
 	return r

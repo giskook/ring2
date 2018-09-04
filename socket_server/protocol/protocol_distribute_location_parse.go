@@ -23,13 +23,13 @@ type DistributeLocationParsedPkg struct {
 }
 
 func (d *DistributeLocationParsedPkg) Serialize() []byte {
-	cmd := write_header(PROTOCOL_DISTRIBUTE_RESP_LBS, d.Imei)
+	location := write_header(PROTOCOL_DISTRIBUTE_RESP_LBS, d.Imei)
 	t, err := time.Parse("060102-150405", d.Time)
 	if err != nil {
 		log.Println("parse time err")
 	}
 
-	location := t.Format("060102")
+	location += t.Format("060102")
 	location += "/"
 	location += t.Format("150405")
 	location += "/"
@@ -37,10 +37,8 @@ func (d *DistributeLocationParsedPkg) Serialize() []byte {
 	location += "S"
 	location += base.Longd2dm(d.Longitude)
 	location += "E"
-	cmd += PROTOCOL_SEP
-	cmd += PROTOCOL_END_FLAG
 
-	return []byte(cmd)
+	return write_tail(location)
 }
 
 func (p *DistributeLocationParsedPkg) SerializeToUpper() []byte {

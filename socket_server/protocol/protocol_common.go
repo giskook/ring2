@@ -2,6 +2,7 @@ package protocol
 
 import (
 	"bytes"
+	"github.com/giskook/ring2/base"
 	"strings"
 )
 
@@ -40,6 +41,21 @@ func write_header(protocol_id string, imei string) string {
 	cmd += PROTOCOL_SEP
 
 	return cmd
+}
+
+func write_tail(cmd string) []byte {
+	cmd += PROTOCOL_SEP
+	cmd += "#"
+	var result byte = 0
+	for _, v := range cmd {
+		result ^= byte(v)
+	}
+	cmd += PROTOCOL_SEP
+	cmd += base.GetBCD(result)
+	cmd += PROTOCOL_SEP
+	cmd += PROTOCOL_END_FLAG
+
+	return []byte(cmd)
 }
 
 func CheckProtocol(buffer *bytes.Buffer) (string, []string) {

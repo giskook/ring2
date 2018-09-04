@@ -13,12 +13,10 @@ type DistributeFresetPkg struct {
 
 func (d *DistributeFresetPkg) Serialize() []byte {
 	cmd := write_header(PROTOCOL_DISTRIBUTE_FRESET, d.Imei)
-	cmd += PROTOCOL_SEP
 	fre, _ := strconv.Atoi(d.Freset)
 	cmd += strconv.FormatInt(int64(fre)*60, 10)
-	cmd += PROTOCOL_END_FLAG
 
-	return []byte(cmd)
+	return write_tail(cmd)
 }
 
 func ParseDistributeFreset(d *Carrier.Distribute) (string, *DistributeFresetPkg) {

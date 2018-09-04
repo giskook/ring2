@@ -7,6 +7,7 @@ import (
 	"github.com/giskook/ring2/socket_server/protocol"
 	"github.com/golang/protobuf/proto"
 	"log"
+	//"strconv"
 )
 
 func (ss *SocketServer) consumer_lbs(l []byte) {
@@ -53,10 +54,21 @@ func (ss *SocketServer) consumer_worker() {
 					var err error
 					switch distribute.Protocol {
 					case Carrier.Distribute_LOGRT:
-						imei, p := protocol.ParseDistributeLogRt(distribute, "")
+						imei, p, _ := protocol.ParseDistributeLogRt(distribute, "")
+						//interal, _ := strconv.Atoi(i)
+
 						c := ss.SetStatus(imei, p.Result)
 						p.RandomNum = c.random_num
+						//go c.reqp(3)
 						err := c.Send(p)
+						c.Send(&protocol.DistributeFresetPkg{
+							Imei:   c.imei,
+							Freset: "5",
+						})
+						//c.Send(&protocol.DistributeReqpPkg{
+						//						Imei: c.imei,
+						//				})
+
 						if err != nil {
 							log.Printf("<ERR> %s %s\n", imei, err.Error())
 						}
@@ -64,7 +76,19 @@ func (ss *SocketServer) consumer_worker() {
 					case Carrier.Distribute_REQP:
 						err = ss.Send(protocol.ParseDistributeReqp(distribute))
 					case Carrier.Distribute_MESSAGE:
-						err = ss.Send(protocol.ParseDistributeMessage(distribute))
+
+						imei, d := protocol.ParseDistributeMessage(distribute)
+						err = ss.Send(imei, d)
+						header := &base.Header{
+							AppID: ss.conf.AppID,
+							From:  ss.conf.UUID,
+							To:    ss.conf.Nsq.TopicPControl,
+						}
+						receipt := protocol.ParseReportReceipt(d.Imei, d.Serial, header)
+						ss.SocketIn <- &base.SocketData{
+							Header: header,
+							Data:   receipt.Serialize(),
+						}
 					case Carrier.Distribute_FRESET:
 						err = ss.Send(protocol.ParseDistributeFreset(distribute))
 					}

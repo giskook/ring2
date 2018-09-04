@@ -21,13 +21,11 @@ func (d *DistributeLogRtPkg) Serialize() []byte {
 	} else {
 		cmd += "ER"
 	}
-	cmd += PROTOCOL_SEP
-	cmd += PROTOCOL_END_FLAG
 
-	return []byte(cmd)
+	return write_tail(cmd)
 }
 
-func ParseDistributeLogRt(d *Carrier.Distribute, random_num string) (string, *DistributeLogRtPkg) {
+func ParseDistributeLogRt(d *Carrier.Distribute, random_num string) (string, *DistributeLogRtPkg, string) {
 	dlogrt := &DistributeLogRtPkg{
 		Imei:     d.Logrt.Imei,
 		Time:     d.Logrt.Time,
@@ -38,5 +36,5 @@ func ParseDistributeLogRt(d *Carrier.Distribute, random_num string) (string, *Di
 		dlogrt.Settings[k] = v
 	}
 
-	return d.Logrt.Imei, dlogrt
+	return d.Logrt.Imei, dlogrt, dlogrt.Settings["0"]
 }

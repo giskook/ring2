@@ -50,7 +50,7 @@ func ParseReportLogin(p []string, h *base.Header) *ReportLoginPkg {
 		RandomNum:  p[3],
 		Imsi:       p[4],
 		DeviceType: "DK-WB100",
-		Protocol:   "105",
+		Protocol:   "106",
 		PhoneNum:   p[5],
 		I:          p[6],
 		J:          p[7],

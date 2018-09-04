@@ -13,10 +13,8 @@ func (d *DistributeTimePkg) Serialize() []byte {
 	cmd += "TIME"
 	cmd += PROTOCOL_SEP
 	cmd += time.Now().Format("060102150405")
-	cmd += PROTOCOL_SEP
-	cmd += PROTOCOL_END_FLAG
 
-	return []byte(cmd)
+	return write_tail(cmd)
 }
 
 func ParseTime(imei string) (string, *DistributeTimePkg) {

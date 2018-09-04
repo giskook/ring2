@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"github.com/gansidui/gotcp"
 	"github.com/giskook/ring2/base"
+	"github.com/giskook/ring2/socket_server/protocol"
 	"time"
 )
 
@@ -23,6 +24,7 @@ type Connection struct {
 	conf            *ConnConf
 	c               *gotcp.Conn
 	ID              uint64
+	imei            string
 	RecvBuffer      *bytes.Buffer
 	read_timestamp  int64
 	write_timestamp int64
@@ -30,20 +32,21 @@ type Connection struct {
 	status          uint8
 	random_num      string
 
+	interval int
+
 	ticker *time.Ticker
 }
 
 func NewConnection(c *gotcp.Conn, conf *ConnConf) *Connection {
 	tcp_c := c.GetRawConn()
 	tcp_c.SetReadDeadline(time.Now().Add(time.Duration(conf.read_limit) * time.Second))
-	tcp_c.SetWriteDeadline(time.Now().Add(time.Duration(conf.write_limit) * time.Second))
+	//tcp_c.SetWriteDeadline(time.Now().Add(time.Duration(conf.write_limit) * time.Second))
 	return &Connection{
 		conf:            conf,
 		c:               c,
 		read_timestamp:  time.Now().Unix(),
 		write_timestamp: time.Now().Unix(),
 		RecvBuffer:      bytes.NewBuffer([]byte{}),
-		ticker:          time.NewTicker(10 * time.Second),
 		exit:            make(chan struct{}),
 	}
 }
@@ -59,7 +62,9 @@ func (c *Connection) SetWriteDeadline() {
 func (c *Connection) Close() {
 	close(c.exit)
 	c.RecvBuffer.Reset()
-	c.ticker.Stop()
+	if c.ticker != nil {
+		c.ticker.Stop()
+	}
 }
 
 func (c *Connection) Equal(cc *Connection) bool {
@@ -72,4 +77,33 @@ func (c *Connection) Send(p gotcp.Packet) error {
 	}
 
 	return base.ErrSocketAlreadyNotExist
+}
+
+func (c *Connection) reqp(interval int) {
+	defer func() {
+		if c.ticker != nil {
+			c.ticker.Stop()
+			c.ticker = nil
+		}
+	}()
+	if c.ticker != nil {
+		c.ticker.Stop()
+		c.ticker = nil
+	}
+	time.Sleep(time.Second)
+	freqp := func() {
+		c.Send(&protocol.DistributeReqpPkg{
+			Imei: c.imei,
+		})
+	}
+	//freqp()
+	c.ticker = time.NewTicker(time.Duration(interval) * time.Minute)
+	for {
+		select {
+		case <-c.exit:
+			return
+		case <-c.ticker.C:
+			freqp()
+		}
+	}
 }
